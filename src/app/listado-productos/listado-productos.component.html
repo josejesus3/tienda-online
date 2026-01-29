@@ -1,31 +1,12 @@
-<div class="container mt-3">
-    <h3 class="text-warning text-center">Listado de Productos</h3>
-    <ul class=" list-group w-75 mx-auto">
-        @for(producto of productos; track $index){
-            <li class="list-group-item  d-flex justify-content-between text-center align-items-center">
-                {{producto.descripcion}},
-                ${{producto.precio}}
-                <button class="btn btn-outline-danger border-0 rounded-circle btn-sm "
-                (click)="eliminarProducto($index)">X</button>
-            </li>
-        }@empty {
-            <p class=" text-center " > No hay Productos Agregados</p>
-        }
-    </ul>
-    <h5 class=" text-success mt-3 text-center">Agregar Nuevo Producto</h5>
-     <form class="d-flex justify-content-between align-items-center my-4 w-75 mx-auto">
-        <input type="text" id="descripcion" name="descripcion"
-        placeholder="Descripcion Producto" class=" form-control me-2 w-75"
-        autocomplete="off"
-        [(ngModel)]="descripcionInput"/>
-
-         <input type="number" id="precio" name="precio"
-        placeholder="Precio" class=" form-control me-2 w-25"
-        autocomplete="off"
-        [(ngModel)]="precioInput"/>
-
-        <button type="submit" class=" btn btn-primary"  (click)="agregarProducto()">Agregar</button>
-        
-     </form>
-
+<div class="container mt-3 text-center "> 
+    <h3 class="text-warning">Listado de Productos</h3> 
+    <ul class="list-group w-50 mx-auto"> 
+        @for (productoElemento of productos; track $index) { 
+        <app-producto [producto]="productoElemento"
+        (eliminarEvent)="eliminarProducto($index)" /> 
+        } 
+    </ul> 
+ 
+    <app-formulario-producto (nuevoProducto)="agregarProducto($event)" /> 
+ 
 </div>
