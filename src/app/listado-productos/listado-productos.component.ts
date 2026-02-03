@@ -3,6 +3,7 @@ import { ProductoComponent } from '../producto/producto.component';
 import { FormsModule } from '@angular/forms';
 import { Producto } from '../producto/producto.model';
 import { FormularioProductoComponent } from "../formulario-producto/formulario-producto.component";
+import { ServicioProductoService } from '../servicio-producto.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -13,17 +14,19 @@ import { FormularioProductoComponent } from "../formulario-producto/formulario-p
 })
 export class ListadoProductosComponent {
 
-   productos: Producto[] = [ 
-    new Producto('Pantalón', 130.0), 
-    new Producto('Camisa', 80.0), 
-    new Producto('Playera', 50.0), 
-  ]; 
- 
-  agregarProducto(producto: Producto){ 
-    this.productos.push(producto); 
+   productos: Producto[] = []; 
+  constructor( private servicioProducto:ServicioProductoService){
+    servicioProducto.detalleProductoEmitter.subscribe((producto:Producto)=>alert(`Producto: ${producto.descripcion}, $${producto.precio}`))
   }
-  eliminarProducto(indice:number){
-    this.productos.splice(indice,1);
+  ngOnInit(){
+        this.productos=this.servicioProducto.productos;
+       
 
   }
+  eliminarProducto(indice: number) {
+this.servicioProducto.eliminarProducto(indice);
+}
+  
+
+ 
 }

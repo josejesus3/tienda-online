@@ -1,9 +1,39 @@
-<li class="list-group-item text-center d-flex justify-content-between">
-{{ producto.descripcion }},
-${{ producto.precio }}
-<button class="btn btn-outline-danger btn-sm  border-0 rounded-circle" (click)="eliminarProducto()">
+
+<!--Para que todo quede alineadoo no importa que tanto crezca el texto los botones no se moveran del lugar usa este simple codigo-->
+<li class="list-group-item text-center d-flex justify-content-around align-items-center ">
+<span class="w-25  text-truncate text-start " >
+    {{ producto.descripcion }}, ${{ producto.precio }}
+</span>
+<button class="btn btn-info btn-sm  ms-auto me-auto "  type="submit" (click)="emitirDetalleProducto()">
+      Ver detalle
+    </button>
+<button class="btn btn-outline-danger btn-sm  border-0 rounded-circle"  (click)="eliminarProducto()">
       X
     </button>
 
     
 </li>
+
+<!--Para que todo quede alineadoo no importa que tanto crezca el texto los botones no se moveran del lugar usa este simple codigo con div
+
+<li class="list-group-item d-flex justify-content-around align-items-center ">
+<div class="flex-grow-1 flex-basis-0 text-start text-truncate" style="flex: 1;">
+    {{ producto.descripcion }}, ${{ producto.precio }}
+  </div>
+
+  <div class="flex-grow-1 flex-basis-0 text-center" style="flex: 1;">
+    <button class="btn btn-info btn-sm" type="submit" (click)="emitirDetalleProducto()">
+      Ver detalle
+    </button>
+  </div>
+
+  <div class="flex-grow-1 flex-basis-0 text-end" style="flex: 1;">
+    <button class="btn btn-outline-danger btn-sm border-0 rounded-circle" (click)="eliminarProducto()">
+      X
+    </button>
+  </div>
+
+    
+</li>
+
+-->

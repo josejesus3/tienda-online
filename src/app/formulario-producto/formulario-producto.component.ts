@@ -1,37 +1,45 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Producto } from '../producto/producto.model';
+import { FormsModule } from '@angular/forms';
+import { ServicioProductoService } from '../servicio-producto.service';
 
 @Component({
   selector: 'app-formulario-producto',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './formulario-producto.component.html',
-  styleUrl: './formulario-producto.component.css'
+  styleUrl: './formulario-producto.component.css',
 })
 export class FormularioProductoComponent {
-   @ViewChild('descripcionInput') descripcionInput!: ElementRef; 
-  @ViewChild('precioInput') precioInput!: ElementRef; 
-  @Output() nuevoProducto = new EventEmitter<Producto>(); 
-   
-  agregarProductoS(evento: Event){ 
-    evento.preventDefault(); 
-     
-    //Validar que sean valores correcto 
-    if(this.descripcionInput.nativeElement.value.trim() === ''  
-      || this.precioInput == null || this.precioInput.nativeElement.value <=0){ 
-      console.log('Debe ingresar una descripción y un precio válidos'); 
-      return; 
-    } 
- 
-    const producto = new Producto(this.descripcionInput.nativeElement.value,  
-      this.precioInput.nativeElement.value); 
- 
-    //Emitir el evento de nuevo producto 
-    this.nuevoProducto.emit(producto); 
- 
-    // Limpiamos los campos del formulario 
-    this.descripcionInput.nativeElement.value = ''; 
-    this.precioInput.nativeElement.value = null; 
-  } 
+  descripcionInput: string = '';
+  precioInput: number | null = null;
 
+  constructor(private servicioProducto: ServicioProductoService) {}
+
+  agregarProductoS() {
+   
+
+    //Validar que sean valores correcto
+    if (
+      this.descripcionInput.trim() === '' ||
+      this.precioInput == null ||
+      this.precioInput <= 0
+    ) {
+      console.log('Debe ingresar una descripción y un precio válidos');
+      return;
+    }
+
+    const producto = new Producto(this.descripcionInput, this.precioInput);
+    this.servicioProducto.agregarProducto(producto);
+
+    // Limpiamos los campos del formulario
+    this.descripcionInput = '';
+    this.precioInput = null;
+  }
 }
